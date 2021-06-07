@@ -8,7 +8,8 @@ const app = firebase.initializeApp({
     projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID
 })
 
 export const auth = app.auth()
