@@ -32,6 +32,10 @@ export function AuthContext({ children }) {
     auth.signOut()
   }
 
+  function signIn(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+  }
+
   //useEffect: Når noe skjer vil vi at en bivirkning skal skje
   //setTimeout setter en delay før den skal displaye fornavn og etternavn
   //3. Unsubscribe gjør slik at etter eventen har skjedd, stopper serveren å lytte til den
@@ -49,7 +53,8 @@ export function AuthContext({ children }) {
   const value = {
     currentUser,
     registrer,
-    logOut
+    logOut,
+    signIn
   }
 
   return (

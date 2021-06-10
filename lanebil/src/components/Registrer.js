@@ -5,17 +5,17 @@ import { useAuth } from '../context/AuthContext'
 export default function Registrer() {
     const emailRef = useRef()
     const passordRef = useRef()
-    const repeatPasswordRef = useRef()
+    //const repeatPasswordRef = useRef()
     const usernameRef = useRef()
 
     const history = useHistory()
 
     const { registrer } = useAuth()
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
 
-        registrer(emailRef.current.value, passordRef.current.value, usernameRef.current.value)
+        await registrer(emailRef.current.value, passordRef.current.value, usernameRef.current.value)
         history.push('/')
         
     }
