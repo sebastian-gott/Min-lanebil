@@ -3,7 +3,11 @@ import { NavLink, withRouter } from 'react-router-dom'
 import {useAuth} from '../context/AuthContext'
 
 function Navbar() {
-    const { currentUser } = useAuth()
+    const { currentUser, logOut } = useAuth()
+
+    function handleLogout(){
+        logOut()
+    }
 
     if(!currentUser){
     return (
@@ -28,7 +32,7 @@ function Navbar() {
                 <a href="/" className="brand-logo">MIN LÅNEBIL</a>
                 <ul className="right">
                     <li><NavLink to="/"></NavLink></li>
-                    <p>logget inn</p>
+                    <button onClick={handleLogout} className="btn">Logg ut</button>
                 </ul>
             </nav>
         </div>

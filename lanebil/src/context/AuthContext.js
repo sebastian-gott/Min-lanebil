@@ -21,10 +21,15 @@ export function AuthContext({ children }) {
     auth.createUserWithEmailAndPassword(email, password).then( cred => {
       return db.collection('users').doc(cred.user.uid).set({
         username,
-        refId: cred.user.uid
+        refId: cred.user.uid,
+        friends: []
       })  
     })
   console.log(registrer)
+  }
+  
+  function logOut() {
+    auth.signOut()
   }
 
   //useEffect: Når noe skjer vil vi at en bivirkning skal skje
@@ -43,7 +48,8 @@ export function AuthContext({ children }) {
   //Ulike verdier man gir Provider tilgang til å lytte etter
   const value = {
     currentUser,
-    registrer
+    registrer,
+    logOut
   }
 
   return (
