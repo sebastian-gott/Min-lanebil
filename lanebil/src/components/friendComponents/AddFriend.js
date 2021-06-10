@@ -1,10 +1,10 @@
 import React from 'react'
 
 export default function AddFriend() {
-   const addFriend = document.querySelector('.popup-screen')
+    const addFriend = document.querySelector('.popup-screen')
 
     function handleCloseWindow() {
-       addFriend.style.display = 'none'
+       addFriend.style.display= 'none'
     }
 
     return (

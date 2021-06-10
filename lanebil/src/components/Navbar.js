@@ -1,18 +1,18 @@
 import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import {useAuth} from '../context/AuthContext'
-import AddFriend from './AddFriend'
+import AddFriend from './friendComponents/AddFriend'
 
 function Navbar() {
     const { currentUser, logOut } = useAuth()
-   const addFriend = document.querySelector('.popup-screen')
+    const addFriend = document.querySelector('.popup-screen')
 
     function handleLogout(){
         logOut()
     }
 
     function handleFriendOpen(){
-        addFriend.style.display = 'block'
+        addFriend.style.display= 'block'
     }
 
     if(!currentUser){
