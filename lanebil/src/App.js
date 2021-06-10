@@ -6,6 +6,7 @@ import Registrer from './components/Registrer'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { AuthContext } from './context/AuthContext'
 
+
 function App() {
   return (
     <AuthContext>

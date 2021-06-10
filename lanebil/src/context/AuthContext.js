@@ -22,7 +22,8 @@ export function AuthContext({ children }) {
       return db.collection('users').doc(cred.user.uid).set({
         username,
         refId: cred.user.uid,
-        friends: []
+        friends: [],
+        friendRequets: false
       })  
     })
   console.log(registrer)
