@@ -49,7 +49,7 @@ export function AuthContext({ children }) {
       //console.log(userResult.toString(0))
     })
     
-    friendReqRef.doc(friendRequestId).set({
+    friendReqRef.doc().set({
       to: friendRequestId,
       from: currentUser.uid
     })
