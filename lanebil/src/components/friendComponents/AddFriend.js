@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
 export default function AddFriend() {
-    const addFriend = document.querySelector('.popup-screen')
 
-    function handleCloseWindow() {
-       addFriend.style.display= 'none'
+    const { addFriend } = useAuth()
+
+    const usernameRef = useRef()
+
+    function handleSubmit(e){
+        e.preventDefault()
+        addFriend(usernameRef.current.value)
     }
 
     return (
         <div className="popup-screen friendRequest">
             <p className="tag-text">Skriv inn brukernavn til personen du vil legge til</p>
-            <form>
-                <input type="text" placeholder="Brukernavn" />
-                <button className="btn">Send venneforspørsel</button>
+            <form onSubmit={handleSubmit}>
+                <input type="text" placeholder="Brukernavn" ref={usernameRef} />
+                <button className="btn" type="submit">Send venneforspørsel</button>
             </form>
-            <button className="btn" onClick={handleCloseWindow}>Lukk vindu</button>
+            <button className="btn">Lukk vindu</button>
         </div>
     )
 }

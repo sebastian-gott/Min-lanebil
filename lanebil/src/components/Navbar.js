@@ -8,15 +8,18 @@ function Navbar() {
     const { currentUser, logOut } = useAuth()
 
     const [friendRequestCheck, setRequestCheck] = useState()
+    const [friendComponentDisplay, setFriendComponentDisplay] = useState()
 
-    const addFriend = document.querySelector('.popup-screen')
 
     function handleLogout(){
         logOut()
     }
 
     function handleFriendOpen(){
-        addFriend.style.display= 'block'
+        setFriendComponentDisplay(true)
+        if(friendComponentDisplay){
+            setFriendComponentDisplay(false)
+        }
     }
     
     useEffect(() => {
@@ -64,7 +67,7 @@ function Navbar() {
                     </ul>
                 </nav>
             </div>
-            <AddFriend />
+            { friendComponentDisplay && <AddFriend />}
     </div>
      )
  }

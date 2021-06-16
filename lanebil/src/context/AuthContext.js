@@ -14,12 +14,16 @@ export function useAuth() {
 export function AuthContext({ children }) {
   const [loading, setLoading] = useState(true)
   const [ currentUser, setCurrentUser ] = useState()
+  const [friendRequestId, setFriendRequestId] = useState()
+
+  const userRef = db.collection('users')
+  const friendReqRef = db.collection('friendRequests')
 
 
 //Henter inn informasjon fra registering og legger det inn i firebase
   function registrer(email, password, username) {
     auth.createUserWithEmailAndPassword(email, password).then( cred => {
-      return db.collection('users').doc(cred.user.uid).set({
+      return userRef.doc(cred.user.uid).set({
         username,
         refId: cred.user.uid,
         friends: [],
@@ -35,6 +39,21 @@ export function AuthContext({ children }) {
 
   function signIn(email, password) {
     auth.signInWithEmailAndPassword(email, password)
+  }
+
+  function addFriend(username) {
+    userRef.where('username', '==', username).get()
+    .then(snapshot => {
+      const userResult = snapshot.docs.map(doc => doc.data().refId)
+      setFriendRequestId(userResult.toString(0))
+      console.log(userResult.toString(0))
+    })
+    
+    friendReqRef.doc(friendRequestId).set({
+      to: friendRequestId,
+      from: currentUser.uid
+    })
+    setFriendRequestId('')
   }
 
   //useEffect: Når noe skjer vil vi at en bivirkning skal skje
@@ -55,7 +74,8 @@ export function AuthContext({ children }) {
     currentUser,
     registrer,
     logOut,
-    signIn
+    signIn,
+    addFriend
   }
 
   return (
