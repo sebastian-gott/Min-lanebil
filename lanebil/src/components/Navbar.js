@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import {useAuth} from '../context/AuthContext'
 import AddFriend from './friendComponents/AddFriend'
+import AcceptFriends from './friendComponents/AcceptFriends'
 import { db } from '../server/firebase'
 
 function Navbar() {
@@ -9,6 +10,7 @@ function Navbar() {
 
     const [friendRequestCheck, setRequestCheck] = useState()
     const [friendComponentDisplay, setFriendComponentDisplay] = useState()
+    const [requestComponentDisplay, setRequestComponentDisplay] = useState()
 
 
     function handleLogout(){
@@ -21,21 +23,28 @@ function Navbar() {
             setFriendComponentDisplay(false)
         }
     }
+
+    function handleFriendReqOpen(){
+        setRequestComponentDisplay(true)
+        if(requestComponentDisplay){
+            setRequestComponentDisplay(false)
+        }
+    }
     
     useEffect(() => {
-        const unsub = db.collection('users').doc(currentUser.uid)
-        .onSnapshot(function (doc){
-            const requestCheck = doc.data().friendRequests;
-            if(requestCheck === true){
-                setRequestCheck(requestCheck)
-                console.log(friendRequestCheck)
-            }
-            
-            
-            return unsub
-        })
-        
-        
+        if(currentUser){
+            const unsub = db.collection('users').doc(currentUser.uid)
+            .onSnapshot(function (doc){
+                const requestCheck = doc.data().friendRequests;
+                if(requestCheck === true){
+                    setRequestCheck(requestCheck)
+                    console.log(friendRequestCheck)
+                }
+                
+                
+                return unsub
+            })
+        } 
     }, [])
 
     if(!currentUser){
@@ -62,12 +71,13 @@ function Navbar() {
                     <ul className="right">
                         <li><NavLink to="/">Hjem</NavLink></li>
                         <li><a className="addFriend" onClick={handleFriendOpen}>Legg til venn</a></li>
-                        { friendRequestCheck && <li><a className="friendRequest">!</a></li> }
+                        { friendRequestCheck && <li><a className="friendRequest" onClick={handleFriendReqOpen}>!</a></li> }
                         <button className="btn" onClick={handleLogout}>Logg ut</button>
                     </ul>
                 </nav>
             </div>
             { friendComponentDisplay && <AddFriend />}
+            { requestComponentDisplay && <AcceptFriends /> }
     </div>
      )
  }

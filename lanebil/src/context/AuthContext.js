@@ -46,12 +46,15 @@ export function AuthContext({ children }) {
     .then(snapshot => {
       const userResult = snapshot.docs.map(doc => doc.data().refId)
       setFriendRequestId(userResult.toString(0))
-      console.log(userResult.toString(0))
+      //console.log(userResult.toString(0))
     })
     
     friendReqRef.doc(friendRequestId).set({
       to: friendRequestId,
       from: currentUser.uid
+    })
+    userRef.doc(friendRequestId).update({
+      friendRequests: true
     })
     setFriendRequestId('')
   }
